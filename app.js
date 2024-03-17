@@ -8,19 +8,31 @@ const YAML = require('yamljs')
 const swaggerUI = require('swagger-ui-express');
 const swaggerDoc = YAML.load('./openApi3.yml');
 const checkApiKey = require('./middleware/checkApiKey')
-
-app.use(express.json());
-
+const apiValidator = require('express-openapi-validator');
+const errorHandler = require('./middleware/errorHandler');
 // Create SQLite DB and Table
 queries.createFCountTable();
+
+// General middleware
+app.use(express.json());
 
 // API documentation
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
-// Route middleware
+// API route middleware
 app.use(checkApiKey);
+app.use(
+  apiValidator.middleware({
+    apiSpec: './openApi3.yml',
+    validateRequests: true,
+    validateResponses: true,
+  }),
+);
 
 // Base path for the API 
 app.use('/f-counts', fCountRouter);
+
+// Error handling
+app.use(errorHandler)
 
 module.exports = app;
