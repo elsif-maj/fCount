@@ -10,8 +10,12 @@ paths:
   /f-counts:
     post:
       summary: Create a new fCount request to count faces in an image
-      # requestBody: 
-        # todo: schema 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/fCountRequest'
       responses:
         '201':
           description: Created
@@ -21,15 +25,30 @@ paths:
           #description: Unauthorized
         '500':
           description: Internal Server Error
-      # callbacks:
-        # todo: callback post request
+      callbacks:
+        sendFCount:
+          '{$request.body#/callbackUrl}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/fCountResponse'
+              responses:
+                default:
+                  description: Unknown -- may depend on the service
     get:
       summary: Get a list of fCount requests
       responses:
         '200':
           description: OK
-          # content:
-            # todo: schema 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/fCountResponse'
         #'401':
           #description: Unauthorized
         '500':
@@ -46,8 +65,10 @@ paths:
       responses:
         '200':
           description: OK
-          # content:
-            # todo: schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fCountResponse'
         '404':
           description: Not Found
         #'401':
@@ -71,3 +92,27 @@ paths:
           #description: Unauthorized
         #'500':
           #description: Internal Server Error
+components:
+  schemas:
+    fCountRequest:
+      type: object
+      properties:
+        imgUrl:
+          type: string
+          format: uri
+        callbackUrl:
+          type: string
+          format: uri
+    fCountResponse:
+      type: object
+      properties:
+        id:
+          type: number 
+        url:
+          type: string
+          format: uri
+        status:
+          type: string
+        fcount:
+          type: number
+          nullable: true 
