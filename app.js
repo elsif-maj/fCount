@@ -4,6 +4,8 @@ const fCountRouter = require('./routes/fCountRouter');
 const db = require('./database/db');
 const queries = require('./database/queries');
 
+app.use(express.json());
+
 // Create SQLite DB and Table
 queries.createFCountTable();
 

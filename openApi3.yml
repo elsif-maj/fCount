@@ -17,8 +17,8 @@ paths:
           description: Created
         '400':
           description: Bad Request
-        '401':
-          description: Unauthorized
+        #'401':
+          #description: Unauthorized
         '500':
           description: Internal Server Error
       # callbacks:
@@ -30,8 +30,8 @@ paths:
           description: OK
           # content:
             # todo: schema 
-        '401':
-          description: Unauthorized
+        #'401':
+          #description: Unauthorized
         '500':
           description: Internal Server Error
   /f-counts/{id}:
@@ -50,8 +50,8 @@ paths:
             # todo: schema
         '404':
           description: Not Found
-        '401':
-          description: Unauthorized
+        #'401':
+          #description: Unauthorized
         '500':
           description: Internal Server Error
     delete:
@@ -67,7 +67,7 @@ paths:
           description: No Content
         '404':
           description: Not Found
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
+        #'401':
+          #description: Unauthorized
+        #'500':
+          #description: Internal Server Error
