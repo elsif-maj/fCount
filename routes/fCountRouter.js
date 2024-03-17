@@ -45,12 +45,14 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// Does not distinguish between successful deletion and not finding a record 
 // DELETE /f-counts/:id
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
-  queries.deleteFCountById(id, (err) => {
+  queries.deleteFCountById(id, (err, numRowsDeleted) => {
     if (err) {
+      return res.status(500).end();
+    }
+    if (numRowsDeleted === 0) {
       return res.status(404).end();
     }
     return res.status(204).end();

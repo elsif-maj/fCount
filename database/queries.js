@@ -17,7 +17,9 @@ const getFCountById = (id, callback) => {
 
 // DELETE /f-counts/:id
 const deleteFCountById = (id, callback) => {
-  db.run(`DELETE FROM fcounts WHERE ROWID = ?`, id, callback);
+  db.run(`DELETE FROM fcounts WHERE ROWID = ?`, id, function(err) {
+    callback(err, this.changes);
+  });
 }
 
 // Create the fcounts table if it doesn't exist 
