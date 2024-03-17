@@ -10,6 +10,8 @@ paths:
   /f-counts:
     post:
       summary: Create a new fCount request to count faces in an image
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -40,6 +42,8 @@ paths:
                   description: Unknown -- may depend on the service
     get:
       summary: Get a list of fCount requests
+      security:
+        - ApiKeyAuth: []
       responses:
         '200':
           description: OK
@@ -56,6 +60,8 @@ paths:
   /f-counts/{id}:
     get:
       summary: Get the status of a fCount request with results if available
+      security:
+        - ApiKeyAuth: []
       parameters:
         - name: id
           in: path
@@ -77,6 +83,8 @@ paths:
           description: Internal Server Error
     delete:
       summary: Delete a fCount request
+      security:
+        - ApiKeyAuth: []
       parameters:
         - name: id
           in: path
@@ -93,6 +101,11 @@ paths:
         #'500':
           #description: Internal Server Error
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
   schemas:
     fCountRequest:
       type: object
