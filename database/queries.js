@@ -39,10 +39,21 @@ const createFCountTable = () => {
   });
 };
 
+// Update fcounts record to "completed", and updates number of faces (fcount) once image is processed
+const updateFCountProcessed = (id, num) => {
+  db.run(`UPDATE fcounts SET status = ?, fcount = ? WHERE ROWID = ?`, ["completed", num, id], function(err) {
+    if (err) {
+      return console.error(err.message);
+    }
+  });
+}
+
+
 module.exports = {
   createFCountTable,
   getAllFCounts,
   insertFCount,
   getFCountById,
-  deleteFCountById
+  deleteFCountById,
+  updateFCountProcessed
 };

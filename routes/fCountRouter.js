@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db');
 const queries = require('../database/queries');
-const { errMsg404, errMsg500, errMsg400 } = require('../constants/errMessages');
+const { errMsg404, errMsg500 } = require('../constants/errMessages');
+const startCountWork = require('../services/startCountWork');
 
 // GET /f-counts
 router.get('/', (_, res) => {
@@ -17,19 +18,15 @@ router.get('/', (_, res) => {
 // POST /f-counts
 router.post('/', (req, res) => {
   const { imgUrl, callbackUrl } = req.body;
-  if (!imgUrl || !callbackUrl) {
-    return res.status(400).json(errMsg400); // defer to validator?
-  }
-
-  queries.insertFCount(imgUrl, (err) => {
+  // Cannot be an arrow function due to 'this' being used below
+  queries.insertFCount(imgUrl, function (err) {
     if (err) {
       return res.status(500).json(errMsg500);
     }
+    // Initialize workflow for image processing (face counting) and callback
+    startCountWork(this.lastID, imgUrl, callbackUrl);
 
-  // NB:
-  // initialize the img processing and callback flow
-  
-  return res.status(201).end();
+    return res.status(201).end();
   });
 });
 
