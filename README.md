@@ -4,13 +4,15 @@ This is fCount, an application that provides an API for the submission of image 
 
 ## Instructions
 
-- `git clone https://github.com/elsif-maj/fCount`
+1) `git clone https://github.com/elsif-maj/fCount`
 
-- `docker-compose up` from the project base directory
+2) `docker-compose up` from the project base directory
 
 The base route for the API is localhost:3100/f-counts
 
 Swagger UI docs/interactive page is at localhost:3100/docs
+
+If you switch to a different branch (i.e. `git checkout feature-face-api`), you may need to run `docker-compose build --no-cache` before once again running `docker-compose up`.
 
 ## Notes
 
