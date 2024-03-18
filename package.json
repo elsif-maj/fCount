@@ -4,8 +4,7 @@
   "description": "A service for counting human faces in images",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "./development/apiQuickTests.sh"
+    "start": "node index.js"
   },
   "author": "Michael Johnson",
   "license": "ISC",
